@@ -1,0 +1,6 @@
+ipykernel
+matplotlib
+numpy
+pandas
+scikit-learn
+wfdb
