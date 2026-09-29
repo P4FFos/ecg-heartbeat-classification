@@ -1,8 +1,9 @@
-ipykernel
-matplotlib
-numpy
-pandas
-scikit-learn
-wfdb
-PyYAML
-scipy
+Python 3.14.7
+wfdb==4.3.1
+numpy==2.5.2
+scipy=1.18.1
+pandas==3.0.5
+matplotlib==3.11.0
+PyYAML==6.0.3
+scikit-learn==1.9.0
+ipykernel==7.3.0
