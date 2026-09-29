@@ -2,3 +2,5 @@ data/
 .venv/
 .ruff_cache/
 .DS_Store
+__pycache__/
+.ipynb_checkpoints/
