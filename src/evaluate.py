@@ -4,7 +4,7 @@ import pandas as pd
 import torch
 from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
 
-from src.model import ECGNet, count_parameters
+from model import ECGNet, count_parameters
 
 
 parser = argparse.ArgumentParser()
