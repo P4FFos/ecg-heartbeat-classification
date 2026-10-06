@@ -51,3 +51,11 @@ Output:
 - Validation: 114, 119, 124, 205, 220, 223
 - Test: 100, 103, 105, 111, 113, 117, 121, 123, 200, 202, 210, 212, 213, 214, 219, 221, 222, 228, 231, 232, 233, 234
 - Excluded: 102, 104, 107, 217
+
+# Quantization 
+```
+python -m src.quantize
+```
+
+Output:
+- `results/quantize_results.csv` (metrics per variant)
