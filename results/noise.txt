@@ -1,0 +1,4 @@
+clean  accuracy 0.7113  macro F1 0.4253  per-class [0.822 0.059 0.817 0.003]
+12 dB  accuracy 0.5277  macro F1 0.3441  per-class [0.665 0.077 0.63  0.004]
+6 dB   accuracy 0.3514  macro F1 0.2517  per-class [0.469 0.083 0.446 0.01 ]
+0 dB   accuracy 0.2071  macro F1 0.1461  per-class [0.268 0.072 0.241 0.003]
