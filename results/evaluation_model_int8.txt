@@ -1,0 +1,24 @@
+Model: model_int8
+Dataset: data/processed/test.npz
+Accuracy: 0.7151
+Macro F1: 0.4282
+Parameters: 6612
+
+Per-class results:
+              precision    recall  f1-score   support
+
+           N       0.95      0.73      0.82     44245
+           S       0.03      0.21      0.06      1837
+           V       0.75      0.91      0.83      3220
+           F       0.00      0.01      0.00       388
+
+    accuracy                           0.72     49690
+   macro avg       0.44      0.46      0.43     49690
+weighted avg       0.90      0.72      0.79     49690
+
+Confusion matrix:
+       N      S     V    F
+N  32202  10450   849  744
+S   1427    387    20    3
+V    191     79  2944    6
+F     24    260   102    2

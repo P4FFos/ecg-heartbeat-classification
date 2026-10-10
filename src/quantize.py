@@ -12,7 +12,7 @@ from src.train import evaluate
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CLASSES = ["N", "S", "V", "F"]
-
+quantized_path = PROJECT_ROOT / "results" / "model_int8.pt"
 
 def quantize_weights(model, bits=8):
     qmax = 2 ** (bits - 1) - 1
@@ -52,6 +52,8 @@ def main():
     int8 = ECGNet(channels=(8, 16, 32))
     int8.load_state_dict(state)
     quantize_weights(int8, bits=8)
+    torch.save(int8.state_dict(), quantized_path)
+    print(f"Saved quantized model to {quantized_path}")
     pred, true = evaluate(int8, val_loader)
     acc_int8, macro_int8, row_int8 = report(true, pred, "INT8")
 
