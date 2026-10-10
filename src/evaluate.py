@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import torch
 from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
-
+from pathlib import Path
 from model import ECGNet, count_parameters
 
 
@@ -11,6 +11,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("model")
 parser.add_argument("--data", default="data/processed/test.npz")
 args = parser.parse_args()
+
+model_name = Path(args.model).stem
 
 classes = ["N", "S", "V", "F"]
 
@@ -44,23 +46,34 @@ with torch.no_grad():
 accuracy = accuracy_score(y, pred)
 macro_f1 = f1_score(y, pred, average="macro", zero_division=0)
 
-print(f"Accuracy: {accuracy:.4f}")
-print(f"Macro F1: {macro_f1:.4f}")
-
-print("\nPer-class results:")
-print(classification_report(
+report = classification_report(
     y,
     pred,
     labels=[0, 1, 2, 3],
     target_names=classes,
     zero_division=0
-))
+)
 
-print("Confusion matrix:")
-print(pd.DataFrame(
+matrix = pd.DataFrame(
     confusion_matrix(y, pred, labels=[0, 1, 2, 3]),
     index=classes,
     columns=classes
-))
+)
 
-print(f"\n{count_parameters(model)} parameters")
+output = Path(f"results/evaluation_{model_name}.txt")
+output.parent.mkdir(parents=True, exist_ok=True)
+
+with open(output, "w", encoding="utf-8") as f:
+    f.write(f"Model: {model_name}\n")
+    f.write(f"Dataset: {args.data}\n")
+    f.write(f"Accuracy: {accuracy:.4f}\n")
+    f.write(f"Macro F1: {macro_f1:.4f}\n")
+    f.write(f"Parameters: {count_parameters(model)}\n")
+
+    f.write("\nPer-class results:\n")
+    f.write(report)
+
+    f.write("\nConfusion matrix:\n")
+    f.write(matrix.to_string())
+
+print(f"Results saved to {output}")
