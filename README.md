@@ -52,6 +52,29 @@ Output:
 - Test: 100, 103, 105, 111, 113, 117, 121, 123, 200, 202, 210, 212, 213, 214, 219, 221, 222, 228, 231, 232, 233, 234
 - Excluded: 102, 104, 107, 217
 
+# Run order 
+1. Prepare the data
+2. Train the model
+3. Evaluation on the test set
+4. Noise test
+5. Error analysis
+
+# Train
+Trains a CNN (`ECGNet`, channels 8/16/32, 6612 parameters)
+
+Output: `results/model.pt` (the trained weights)
+
+# Evaluate on the test set
+Runs the model on the test set and prints accuracy, macro F1, per-class results, and the confusion matrix
+
+# Noise test 
+Adds noise to the test beats at different strengths and checks how much accuracy drops. Noise is added only when testing, never during training.
+
+Output: `results/noise_results.csv` and `results/noise_plot.png`
+
+# Error analysis
+Plots examples of beats the model got wrong, so the errors can be looked at directly instead of only as numbers.
+
 # Quantization 
 ```
 python -m src.quantize
