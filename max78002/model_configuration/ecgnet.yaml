@@ -1,0 +1,46 @@
+# ECGNet on MAX78002 (deploy/ai8x/models/ecgnet.py)
+# Input: 1 channel x 200 samples. One processor per input channel
+
+arch: ecgnet
+dataset: MITBIH
+
+layers:
+  # conv1: Conv1d(1 -> 8, k=5) + BN + ReLU
+  - processors: 0x0000000000000001
+    data_format: HWC
+    out_offset: 0x2000
+    operation: Conv1d
+    kernel_size: 5
+    pad: 2
+    activate: ReLU
+  # conv2: MaxPool(2) + Conv1d(8 -> 16, k=5) + BN + ReLU
+  - processors: 0x00000000000000ff
+    out_offset: 0x0000
+    max_pool: 2
+    pool_stride: 2
+    operation: Conv1d
+    kernel_size: 5
+    pad: 2
+    activate: ReLU
+  # conv3: MaxPool(2) + Conv1d(16 -> 32, k=5) + BN + ReLU
+  - processors: 0x000000000000ffff
+    out_offset: 0x2000
+    max_pool: 2
+    pool_stride: 2
+    operation: Conv1d
+    kernel_size: 5
+    pad: 2
+    activate: ReLU
+  # pool: MaxPool(2) on its own
+  - processors: 0x00000000ffffffff
+    out_offset: 0x0000
+    max_pool: 2
+    pool_stride: 2
+    operation: None
+  # fc: Flatten + Linear(800 -> 4), 32-bit output (wide=True in the model)
+  - processors: 0x00000000ffffffff
+    out_offset: 0x2000
+    flatten: true
+    operation: MLP
+    output_width: 32
+    activate: None
